@@ -6,6 +6,7 @@ import Page404 from '../../pages/Page404'
 import Home from '../../pages/Home'
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
+import ForgotPassword from '../../pages/ForgotPassword'
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
         <Route path="/home" element={<Navigate to="/" replace="true" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
