@@ -48,6 +48,25 @@ input:focus {
     background-size: cover;
 }
 
-a{
+a {
     text-decoration: none;
 }
+
+.nav-link-theme {
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    color: #000000;
+    text-decoration: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+    background-color: transparent;
+    border: 0;
+    border-radius: 15px;
+}
+
+.nav-link-theme.active {
+    color: #ffffff;
+    background-color: var(--primary-theme);
+}
+  
