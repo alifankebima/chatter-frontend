@@ -1,7 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import PrivateChat from '../components/PrivateChat'
-import { AiOutlineMenu, AiOutlinePlus, AiOutlineUsergroupAdd, AiOutlineLock } from 'react-icons/ai'
+import { AiOutlineMenu, AiOutlinePlus, AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { HiOutlineLockClosed } from 'react-icons/hi'
+import { VscMegaphone } from 'react-icons/vsc'
+import { BsGear, BsPerson, BsTelephone, BsBookmark, BsPersonPlus, BsQuestionCircle } from 'react-icons/bs'
+import { IoSend } from 'react-icons/io5'
+import { FaSmile } from 'react-icons/fa'
+import { FiPaperclip } from 'react-icons/fi'
 
 // const Desktop = ({ children }) => {
 //   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -34,27 +40,36 @@ const Home = () => {
                 {/* Title app name */}
                 <div className="d-flex justify-content-between">
                   <div className="fs-4 fw-bold text-primary-theme">Chatter</div>
-                  <div class="btn-group dropstart">
-                    <button type="button" class="bg-transparent border-0" data-bs-toggle="dropdown" aria-expanded="false">
+
+                  <div class="dropdown align-self-center">
+                    <button class="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <AiOutlineMenu className="fs-4 fw-bold text-primary-theme" />
                     </button>
-
-                    <ul class="dropdown-menu border-0 bg-primary-theme">
-                      <li className='d-flex text-white'>
-                        <AiOutlineUsergroupAdd className='fs-4'/>
-                        <AiOutlineLock />
-                        <div className="">1</div>
-                      </li>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li><a class="dropdown-item" href="#"><BsGear /> Settings</a></li>
+                      <li><a class="dropdown-item" href="#"><BsPerson /> Contacts</a></li>
+                      <li><a class="dropdown-item" href="#"><BsTelephone /> Calls</a></li>
+                      <li><a class="dropdown-item" href="#"><BsBookmark /> Saved messages</a></li>
+                      <li><a class="dropdown-item" href="#"><BsPersonPlus /> Invite friends</a></li>
+                      <li><a class="dropdown-item" href="#"><BsQuestionCircle /> Chatter FAQ</a></li>
                     </ul>
                   </div>
-
-
                 </div>
 
                 {/* Search bar */}
                 <div className="d-flex mt-4">
                   <input type="text" class="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Search messages" />
-                  <AiOutlinePlus className="ms-2 fs-4 fw-bold text-primary-theme align-self-center" />
+
+                  <div class="dropdown align-self-center">
+                    <button class="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <AiOutlinePlus className="ms-2 fs-4 fw-bold text-primary-theme align-self-center" />
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li><a class="dropdown-item" href="#"><AiOutlineUsergroupAdd className='fs-5' /> New group chat</a></li>
+                      <li><a class="dropdown-item" href="#"><HiOutlineLockClosed className='fs-5' /> New private chat</a></li>
+                      <li><a class="dropdown-item" href="#"><VscMegaphone className='fs-5' /> Broadcast chat</a></li>
+                    </ul>
+                  </div>
                 </div>
 
                 {/* chat category selector */}
@@ -71,10 +86,9 @@ const Home = () => {
                 </ul>
 
                 {/* Chat list */}
-
                 <div class="tab-content flex-grow-1 overflow-auto" id="pills-tabContent">
                   <div class="tab-pane fade show active h-100" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabindex="0">
-                    <div className="overflow-auto h-100">
+                    <div className="h-100">
                       <PrivateChat />
                       <PrivateChat />
                       <PrivateChat />
@@ -100,11 +114,51 @@ const Home = () => {
 
               </div>
             </div>
-            <div className="col-md-8 col-lg-9 bg-light">
+            <div className="col-md-8 col-lg-9 px-0">
 
               {selectMessage ?
-                <div>
-                  Test
+                <div className='d-flex flex-column vh-100'>
+                  <div className="d-flex align-items-center p-3">
+                    <img className="align-self-center" src='/assets/img/Rectangle-3.png' />
+                    <div className="d-flex flex-column justify-content-around ms-2">
+                      <div className="">Theresa Webb</div>
+                      <div className="text-primary">Online</div>
+                    </div>
+                    <AiOutlineMenu className="fs-4 fw-bold text-primary-theme ms-auto me-1" />
+                  </div>
+
+                  <div className="bg-light d-flex flex-column justify-content-end flex-grow-1 p-3 overflow-auto">
+                    <div className="h-100">
+                      <div className="d-flex my-2">
+                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
+                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
+                      </div>
+                      <div className="d-flex my-2">
+                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
+                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
+                      </div>
+                      <div className="d-flex my-2">
+                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
+                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
+                      </div>
+                      <div className="d-flex my-2">
+                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
+                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
+                      </div>
+                      <div className="d-flex my-2">
+                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
+                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center p-3">
+                    <input type="text" class="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Type your message ..." />
+                    <button className='ms-3 bg-transparent border-0'><FiPaperclip className='fs-4 text-primary-theme' /></button>
+                    <button className='ms-3 bg-transparent border-0'><FaSmile className='fs-4 text-primary-theme' /></button>
+                    <button className='ms-3 bg-transparent border-0'><IoSend className='fs-4 text-primary-theme' /></button>
+
+                  </div>
                 </div>
 
                 : <div className="d-flex justify-content-center align-items-center vh-100"><div className='text-secondary'>Please select a chat to start messaging</div> </div>}
