@@ -21,6 +21,7 @@ const Mobile = ({ children }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 })
   return isMobile ? children : null
 }
+
 const Default = ({ children }) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 })
   return isNotMobile ? children : null
@@ -31,7 +32,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Default>
+      {/* <Default> */}
         <div className="container-fluid">
           <div className="row vh-100">
             <div className="col-md-4 col-lg-3">
@@ -166,10 +167,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Default>
-      <Mobile>
-        <div>test mobile</div>
-      </Mobile>
+      {/* </Default> */}
     </Fragment>
 
   )

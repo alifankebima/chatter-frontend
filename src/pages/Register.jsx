@@ -19,9 +19,10 @@ const Register = () => {
                 <IoIosArrowBack className='align-self-center fs-2 fw-bold text-primary-theme' style={{visibility: "hidden"}} />
               </div>
               <div className="mt-4 align-self-center">Let's create your account!</div>
-              <input type="text" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Username" />
-              <input type="email" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Email Address" />
-              <input type="password" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Password" />
+              <input type="text" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Full name" />
+              <input type="text" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput2" placeholder="Username" />
+              <input type="email" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput3" placeholder="Email Address" />
+              <input type="password" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput4" placeholder="Password" />
               <button type="submit" className="bg-primary-theme text-center mt-5 py-2 text-white border-0 rounded-pill">Register</button>
               <div className="mt-4 mb-2 align-self-center">Already have an account? <Link to="/login" className='text-secondary-theme'>Login</Link></div>
             </div>
