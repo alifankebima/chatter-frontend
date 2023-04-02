@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import PrivateChat from '../components/PrivateChat'
+import PrivateChat from '../../components/PrivateChat'
 import { AiOutlineMenu, AiOutlinePlus, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { HiOutlineLockClosed } from 'react-icons/hi'
 import { VscMegaphone } from 'react-icons/vsc'
@@ -8,6 +8,8 @@ import { BsGear, BsPerson, BsTelephone, BsBookmark, BsPersonPlus, BsQuestionCirc
 import { IoSend } from 'react-icons/io5'
 import { FaSmile } from 'react-icons/fa'
 import { FiPaperclip } from 'react-icons/fi'
+import { BiLogOut } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
 
 // const Desktop = ({ children }) => {
 //   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -53,6 +55,7 @@ const Home = () => {
                       <li><a class="dropdown-item" href="#"><BsBookmark /> Saved messages</a></li>
                       <li><a class="dropdown-item" href="#"><BsPersonPlus /> Invite friends</a></li>
                       <li><a class="dropdown-item" href="#"><BsQuestionCircle /> Chatter FAQ</a></li>
+                      <li><Link to="/user/logout" class="dropdown-item" href="#"><BiLogOut /> Logout</Link></li>
                     </ul>
                   </div>
                 </div>
