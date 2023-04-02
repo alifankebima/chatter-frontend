@@ -5,7 +5,7 @@ const RequireAuth = ({children}) => {
     const isAuth = localStorage.getItem("token");
     if (!isAuth) {
         return (
-            <Navigate to="/login" replace="true" />
+            <Navigate to="/user/login" replace="true" />
         )
     }
     return children
