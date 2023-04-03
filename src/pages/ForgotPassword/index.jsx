@@ -49,7 +49,7 @@ const ForgotPassword = () => {
                 <IoIosArrowBack className='align-self-center fs-2 fw-bold text-primary-theme' style={{visibility: "hidden"}} />
               </div>
               <div className="mt-4 align-self-center">Enter email address associated with your account</div>
-              <input type="email" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+              <input type="email" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
               <button type="submit" className="bg-primary-theme text-center mt-5 py-2 text-white border-0 rounded-pill">Send</button>
             </div>
           </form>

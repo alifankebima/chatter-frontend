@@ -52,10 +52,10 @@ const Register = () => {
                 <IoIosArrowBack className='align-self-center fs-2 fw-bold text-primary-theme' style={{visibility: "hidden"}} />
               </div>
               <div className="mt-4 align-self-center">Let's create your account!</div>
-              <input type="text" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Full name" value={fullname} onChange={(e) => setFullname(e.target.value)} />
-              <input type="text" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput2" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-              <input type="email" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput3" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
-              <input type="password" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput4" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input type="text" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Full name" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+              <input type="text" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput2" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input type="email" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput3" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+              <input type="password" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput4" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
               <button type="submit" className="bg-primary-theme text-center mt-5 py-2 text-white border-0 rounded-pill">Register</button>
               <div className="mt-4 mb-2 align-self-center">Already have an account? <Link to="/user/login" className='text-secondary-theme'>Login</Link></div>
             </div>
