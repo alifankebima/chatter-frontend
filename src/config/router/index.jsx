@@ -16,7 +16,7 @@ import EmailVerification from '../../pages/EmailVerification'
 const Router = () => {
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <Routes>
         <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
         <Route path="/home" element={<Navigate to="/" replace="true" />} />

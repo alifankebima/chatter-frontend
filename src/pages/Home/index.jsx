@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import PrivateChat from '../../components/PrivateChat'
 import { AiOutlineMenu, AiOutlinePlus, AiOutlineUsergroupAdd } from 'react-icons/ai'
@@ -10,6 +10,8 @@ import { FaSmile } from 'react-icons/fa'
 import { FiPaperclip } from 'react-icons/fi'
 import { BiLogOut } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import MessageReceiver from '../../components/MessageSender'
+import { io } from "socket.io-client";
 
 // const Desktop = ({ children }) => {
 //   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -29,147 +31,142 @@ const Default = ({ children }) => {
   return isNotMobile ? children : null
 }
 
+
 const Home = () => {
+  const bottomRef = useRef(null);
   const [selectMessage, setSelectMessage] = useState(true);
+  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState(null);
+
+  // Get message
+  useEffect(() => {
+    const resultSocket = io("http://localhost:4000");
+    setSocket(resultSocket);
+    resultSocket.on("messageBE", (data) => {
+      console.log(data)
+      setMessages((current) => [...current, data]);
+    });
+  }, [])
+
+  // Scroll to bottom after sending message
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Send message handler
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    socket.emit('messageAll', { message: inputMessage, user: "alif" })
+    setInputMessage("")
+  }
 
   return (
     <Fragment>
       {/* <Default> */}
-        <div className="container-fluid">
-          <div className="row vh-100">
-            <div className="col-md-4 col-lg-3">
-              <div className="d-flex flex-column pt-3 px-2 vh-100">
+      <div className="container-fluid">
+        <div className="row vh-100">
+          <div className="col-md-4 col-lg-3">
+            <div className="d-flex flex-column pt-3 px-2 vh-100">
 
-                {/* Title app name */}
-                <div className="d-flex justify-content-between">
-                  <div className="fs-4 fw-bold text-primary-theme">Chatter</div>
+              {/* Title app name */}
+              <div className="d-flex justify-content-between">
+                <div className="fs-4 fw-bold text-primary-theme">Chatter</div>
 
-                  <div class="dropdown align-self-center">
-                    <button class="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <AiOutlineMenu className="fs-4 fw-bold text-primary-theme" />
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#"><BsGear /> Settings</a></li>
-                      <li><a class="dropdown-item" href="#"><BsPerson /> Contacts</a></li>
-                      <li><a class="dropdown-item" href="#"><BsTelephone /> Calls</a></li>
-                      <li><a class="dropdown-item" href="#"><BsBookmark /> Saved messages</a></li>
-                      <li><a class="dropdown-item" href="#"><BsPersonPlus /> Invite friends</a></li>
-                      <li><a class="dropdown-item" href="#"><BsQuestionCircle /> Chatter FAQ</a></li>
-                      <li><Link to="/user/logout" class="dropdown-item" href="#"><BiLogOut /> Logout</Link></li>
-                    </ul>
+                <div className="dropdown align-self-center">
+                  <button className="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <AiOutlineMenu className="fs-4 fw-bold text-primary-theme" />
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li><a className="dropdown-item" href="#"><BsGear /> Settings</a></li>
+                    <li><a className="dropdown-item" href="#"><BsPerson /> Contacts</a></li>
+                    <li><a className="dropdown-item" href="#"><BsTelephone /> Calls</a></li>
+                    <li><a className="dropdown-item" href="#"><BsBookmark /> Saved messages</a></li>
+                    <li><a className="dropdown-item" href="#"><BsPersonPlus /> Invite friends</a></li>
+                    <li><a className="dropdown-item" href="#"><BsQuestionCircle /> Chatter FAQ</a></li>
+                    <li><Link to="/user/logout" className="dropdown-item" href="#"><BiLogOut /> Logout</Link></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Search bar */}
+              <div className="d-flex mt-4">
+                <input type="text" className="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Search messages" />
+
+                <div className="dropdown align-self-center">
+                  <button className="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <AiOutlinePlus className="ms-2 fs-4 fw-bold text-primary-theme align-self-center" />
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li><a className="dropdown-item" href="#"><AiOutlineUsergroupAdd className='fs-5' /> New group chat</a></li>
+                    <li><a className="dropdown-item" href="#"><HiOutlineLockClosed className='fs-5' /> New private chat</a></li>
+                    <li><a className="dropdown-item" href="#"><VscMegaphone className='fs-5' /> Broadcast chat</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* chat category selector */}
+              <ul className="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link-theme active fw-semibold" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button className="nav-link-theme fw-semibold" id="pills-unread-tab" data-bs-toggle="pill" data-bs-target="#pills-unread" type="button" role="tab" aria-controls="pills-unread" aria-selected="false">Unread</button>
+                </li>
+              </ul>
+
+              {/* Chat list */}
+              <div className="tab-content flex-grow-1 overflow-auto" id="pills-tabContent">
+                <div className="tab-pane fade show active h-100" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabIndex="0">
+                  <div className="h-100">
+                    <PrivateChat />
+                    <PrivateChat />
                   </div>
                 </div>
-
-                {/* Search bar */}
-                <div className="d-flex mt-4">
-                  <input type="text" class="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Search messages" />
-
-                  <div class="dropdown align-self-center">
-                    <button class="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <AiOutlinePlus className="ms-2 fs-4 fw-bold text-primary-theme align-self-center" />
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#"><AiOutlineUsergroupAdd className='fs-5' /> New group chat</a></li>
-                      <li><a class="dropdown-item" href="#"><HiOutlineLockClosed className='fs-5' /> New private chat</a></li>
-                      <li><a class="dropdown-item" href="#"><VscMegaphone className='fs-5' /> Broadcast chat</a></li>
-                    </ul>
-                  </div>
+                <div className="tab-pane fade" id="pills-unread" role="tabpanel" aria-labelledby="pills-unread-tab" tabIndex="1">
+                  <PrivateChat />
                 </div>
-
-                {/* chat category selector */}
-                <ul class="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link-theme active fw-semibold" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link-theme fw-semibold" id="pills-important-tab" data-bs-toggle="pill" data-bs-target="#pills-important" type="button" role="tab" aria-controls="pills-important" aria-selected="false">Important</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link-theme fw-semibold" id="pills-unread-tab" data-bs-toggle="pill" data-bs-target="#pills-unread" type="button" role="tab" aria-controls="pills-unread" aria-selected="false">Unread</button>
-                  </li>
-                </ul>
-
-                {/* Chat list */}
-                <div class="tab-content flex-grow-1 overflow-auto" id="pills-tabContent">
-                  <div class="tab-pane fade show active h-100" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab" tabindex="0">
-                    <div className="h-100">
-                      <PrivateChat />
-                      <PrivateChat />
-                      <PrivateChat />
-                      <PrivateChat />
-                      <PrivateChat />
-                      <PrivateChat />
-                      <PrivateChat />
-
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="pills-important" role="tabpanel" aria-labelledby="pills-important-tab" tabindex="1">
-                    <PrivateChat />
-                    <PrivateChat />
-                    <PrivateChat />
-                  </div>
-                  <div class="tab-pane fade" id="pills-unread" role="tabpanel" aria-labelledby="pills-unread-tab" tabindex="2">
-                    <PrivateChat />
-                    <PrivateChat />
-                    <PrivateChat />
-                  </div>
-
-                </div>
-
               </div>
             </div>
-            <div className="col-md-8 col-lg-9 px-0">
+          </div>
+          <div className="col-md-8 col-lg-9 px-0">
 
-              {selectMessage ?
-                <div className='d-flex flex-column vh-100'>
-                  <div className="d-flex align-items-center p-3">
-                    <img className="align-self-center" src='/assets/img/Rectangle-3.png' />
-                    <div className="d-flex flex-column justify-content-around ms-2">
-                      <div className="">Theresa Webb</div>
-                      <div className="text-primary">Online</div>
-                    </div>
-                    <AiOutlineMenu className="fs-4 fw-bold text-primary-theme ms-auto me-1" />
+            {selectMessage ?
+              <div className='d-flex flex-column vh-100'>
+                <div className="d-flex align-items-center p-3">
+                  <img className="align-self-center" src='/assets/img/Rectangle-3.png' />
+                  <div className="d-flex flex-column justify-content-around ms-2">
+                    <div className="">Theresa Webb</div>
+                    <div className="text-primary">Online</div>
                   </div>
+                  <AiOutlineMenu className="fs-4 fw-bold text-primary-theme ms-auto me-1" />
+                </div>
 
-                  <div className="bg-light d-flex flex-column justify-content-end flex-grow-1 p-3 overflow-auto">
-                    <div className="h-100">
-                      <div className="d-flex my-2">
-                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
-                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
-                      </div>
-                      <div className="d-flex my-2">
-                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
-                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
-                      </div>
-                      <div className="d-flex my-2">
-                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
-                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
-                      </div>
-                      <div className="d-flex my-2">
-                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
-                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
-                      </div>
-                      <div className="d-flex my-2">
-                        <img className="align-self-end" src='/assets/img/Rectangle-80.png' />
-                        <div className="left-bubble ms-2 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam eos necessitatibus, sapiente inventore atque mollitia architecto, corporis reprehenderit dolores enim nisi blanditiis, praesentium dolorem ducimus doloribus alias est. Quasi, in?</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="d-flex align-items-center p-3">
-                    <input type="text" class="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Type your message ..." />
-                    <button className='ms-3 bg-transparent border-0'><FiPaperclip className='fs-4 text-primary-theme' /></button>
-                    <button className='ms-3 bg-transparent border-0'><FaSmile className='fs-4 text-primary-theme' /></button>
-                    <button className='ms-3 bg-transparent border-0'><IoSend className='fs-4 text-primary-theme' /></button>
-
+                <div className="bg-light d-flex flex-column justify-content-end flex-grow-1 p-3 overflow-auto">
+                  <div className="h-100">
+                    {messages.map((item) => (
+                      <MessageReceiver text={item.message} />
+                    ))}
+                    <div ref={bottomRef} style={{
+                      visibility: 'hidden'
+                    }} />
                   </div>
                 </div>
 
-                : <div className="d-flex justify-content-center align-items-center vh-100"><div className='text-secondary'>Please select a chat to start messaging</div> </div>}
+                <form className="d-flex align-items-center p-3" onSubmit={handleSendMessage}>
+                  <input type="text" className="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Type your message ..." value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} />
+                  {/* <button className='ms-3 bg-transparent border-0'><FiPaperclip className='fs-4 text-primary-theme' /></button>
+                    <button className='ms-3 bg-transparent border-0'><FaSmile className='fs-4 text-primary-theme' /></button> */}
+                  <button type="submit" className='ms-3 bg-transparent border-0'><IoSend className='fs-4 text-primary-theme' /></button>
+                </form>
 
-            </div>
+              </div>
+
+              : <div className="d-flex justify-content-center align-items-center vh-100"><div className='text-secondary'>Please select a chat to start messaging</div> </div>}
+
           </div>
         </div>
+      </div>
       {/* </Default> */}
     </Fragment>
 

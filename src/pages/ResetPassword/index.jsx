@@ -15,7 +15,6 @@ const ResetPassword = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (password == password2) {
-      console.log(token)
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/user/reset-password`, {
           token, password
@@ -61,8 +60,8 @@ const ResetPassword = () => {
                 <IoIosArrowBack className='align-self-center fs-2 fw-bold text-primary-theme' style={{ visibility: "hidden" }} />
               </div>
               <div className="mt-4 align-self-center">Enter your new password</div>
-              <input type="password" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <input type="password" class="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput2" placeholder="Confirm password" value={password2} onChange={(e) => setPassword2(e.target.value)} />
+              <input type="password" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput1" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" className="border-0 border-bottom border-secondary border-2 mt-4" id="exampleFormControlInput2" placeholder="Confirm password" value={password2} onChange={(e) => setPassword2(e.target.value)} />
               <button type="submit" className="bg-primary-theme text-center mt-5 py-2 text-white border-0 rounded-pill">Send</button>
             </div>
           </form>
