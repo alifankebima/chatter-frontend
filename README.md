@@ -95,28 +95,20 @@ npm build
 
 <table>
  <tr>
-    <td><img width="350px" src="./docs/readme/landing-page.png" border="0" alt="Landing Page" /></td>
-    <td> <img width="350px" src="./docs/readme/product-detail.png" border="0"  alt="Product Detail" /></td>
-  </tr>
-   <tr>
-    <td>Landing Page</td>
-    <td>Product Detail</td>
-  </tr>
-   <tr>
     <td><img width="350px" src="./docs/readme/login.png" border="0" alt="Login" /></td>
-    <td><img width="350px" src="./docs/readme/register.png" border="0" alt="Register" /> </td>
+    <td> <img width="350px" src="./docs/readme/register.png" border="0"  alt="Register" /></td>
   </tr>
    <tr>
     <td>Login</td>
     <td>Register</td>
   </tr>
-  <tr>
-    <td><img width="350px" src="./docs/readme/seller-profile.png" border="0" alt="Seller Profile" /> </td>
-     <td><img width="350px" src="./docs/readme/my-product.png" border="0" alt="My Product" /></td>
+   <tr>
+    <td><img width="350px" src="./docs/readme/home-page.png" border="0" alt="Home Page" /></td>
+    <td><img width="350px" src="" border="0" alt="" /> </td>
   </tr>
    <tr>
-    <td>Seller Profile</td>
-     <td>My Product</td>
+    <td>Home Page</td>
+    <td></td>
   </tr>
 </table>
 
