@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+<br />
+<p align="center">
+  <div align="center">
+    <img height="150" src="./docs/readme/logo.svg" alt="chatter" border="0"/>
+  </div>
+  <h3 align="center">Chatter (Messaging App)</h3>
+  <p align="center">
+    <a href="https://github.com/alifankebima/chatter-frontend"><strong>Explore the docs »</strong></a>
+    <br />
+    <a href="https://chatter-frontend.vercel.app">View Demo</a>
+    ·
+    <a href="https://chatter-backend-production.up.railway.app">Api Demo</a>
+  </p>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+- [Table of Contents](#table-of-contents)
+- [About The Project](#about-the-project)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisite](#prerequisites)
+  - [Installation](#installation)
+- [Screenshots](#screenshots)
+- [Related Project](#related-project)
 
-In the project directory, you can run:
+# About The Project
 
-### `npm start`
+Chatter is a website for communicating online and in real time, users can create account, change profile, and communicate with others in text form, besides that users can create groups to communicate with several people simultaneously.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Built With
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+These are the libraries used for building this frontend
 
-### `npm test`
+- [React](https://reactjs.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- [React-icons](https://react-icons.github.io/react-icons/)
+- [Sweetalert2](https://sweetalert2.github.io)
+- [Axios](https://axios-http.com)
+- [Socket.io](https://socket.io)
+- [Redux](https://redux.js.org)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Getting Started
 
-### `npm run build`
+## Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You'll need these programs installed before proceeding to installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/en/download)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This project requires [blanja-backend](https://github.com/alifankebima/chatter-backend) to function properly, follow the steps provided in the readme to install and run the backend API
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Follow this steps to run the server locally
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone this repository
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```sh
+git clone https://github.com/alifankebima/chatter-frontend.git
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Change directory to chatter-frontend
 
-## Learn More
+```sh
+cd chatter-frontend
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Install all of the required modules
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm install
+```
 
-### Code Splitting
+4. Create and configure `.env` file in the root directory, example env are provided in [.env.example](./.env.example)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```env
+REACT_APP_API_URL=[ Backend URL ]
+```
 
-### Analyzing the Bundle Size
+5. Run this command to run the server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```sh
+npm start
+```
 
-### Making a Progressive Web App
+- Run this command to build this website into production ready
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```sh
+npm build
+```
 
-### Advanced Configuration
+# Screenshots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<table>
+ <tr>
+    <td><img width="350px" src="./docs/readme/landing-page.png" border="0" alt="Landing Page" /></td>
+    <td> <img width="350px" src="./docs/readme/product-detail.png" border="0"  alt="Product Detail" /></td>
+  </tr>
+   <tr>
+    <td>Landing Page</td>
+    <td>Product Detail</td>
+  </tr>
+   <tr>
+    <td><img width="350px" src="./docs/readme/login.png" border="0" alt="Login" /></td>
+    <td><img width="350px" src="./docs/readme/register.png" border="0" alt="Register" /> </td>
+  </tr>
+   <tr>
+    <td>Login</td>
+    <td>Register</td>
+  </tr>
+  <tr>
+    <td><img width="350px" src="./docs/readme/seller-profile.png" border="0" alt="Seller Profile" /> </td>
+     <td><img width="350px" src="./docs/readme/my-product.png" border="0" alt="My Product" /></td>
+  </tr>
+   <tr>
+    <td>Seller Profile</td>
+     <td>My Product</td>
+  </tr>
+</table>
 
-### Deployment
+# Related Project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+:rocket: [`Frontend Chatter`](https://github.com/alifankebima/chatter-frontend)
 
-### `npm run build` fails to minify
+:rocket: [`Backend Chatter`](https://github.com/alifankebima/chatter-backend)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+:rocket: [`Demo Chatter`](https://chatter-frontend.vercel.app)
