@@ -49,7 +49,7 @@ You'll need these programs installed before proceeding to installation
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/download)
 
-This project requires [blanja-backend](https://github.com/alifankebima/chatter-backend) to function properly, follow the steps provided in the readme to install and run the backend API
+This project requires [chatter-backend](https://github.com/alifankebima/chatter-backend) to function properly, follow the steps provided in the readme to install and run the backend API
 
 ## Installation
 
