@@ -12,6 +12,7 @@ import ResetPassword from '../../pages/ResetPassword'
 import Coba from '../../pages/Coba'
 import Logout from '../../components/Logout'
 import EmailVerification from '../../pages/EmailVerification'
+import TestRedux from '../../pages/TestRedux'
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
         <Route path="/user/reset-password" element={<ResetPassword />} />
         <Route path="/user/verify" element={<EmailVerification />} />
         <Route path="/coba" element={<Coba />} />
+        <Route path="/redux" element={<TestRedux />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

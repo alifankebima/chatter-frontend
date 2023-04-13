@@ -1,40 +1,52 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import loginAction from '../../config/redux/actions/loginAction';
 import swal from 'sweetalert2'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { userProfile } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/user/login`, {
-        email, password
-      });
-      if (response.status = 200) {
-        swal.fire({
-          title: `Login success`,
-          text: `${response.data.message}`,
-          icon: `success`
-        })
-        localStorage.setItem("token", response.data.data.token);
-        if (localStorage.getItem("token")) {
-          navigate('/');
-        }
+  const handleLogin = (e) => {
+    e.preventDefault()
+    dispatch(loginAction({ email, password })).then(() => {
+      if (localStorage.getItem("token")) {
+        navigate('/')
       }
-    } catch (error) {
-      console.log(error.response)
-      swal.fire({
-        title: `Login failed`,
-        text: `${error.response.data.message}`,
-        icon: `error`
-      })
-    }
+    })
   }
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/user/login`, {
+  //       email, password
+  //     });
+  //     if (response.status = 200) {
+  //       swal.fire({
+  //         title: `Login success`,
+  //         text: `${response.data.message}`,
+  //         icon: `success`
+  //       })
+  //       localStorage.setItem("token", response.data.data.token);
+  //       if (localStorage.getItem("token")) {
+  //         navigate('/');
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error.response)
+  //     swal.fire({
+  //       title: `Login failed`,
+  //       text: `${error.response.data.message}`,
+  //       icon: `error`
+  //     })
+  //   }
+  // }
 
   return (
     // image background
