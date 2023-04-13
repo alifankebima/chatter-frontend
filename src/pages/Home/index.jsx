@@ -10,8 +10,12 @@ import { FaSmile } from 'react-icons/fa'
 import { FiPaperclip } from 'react-icons/fi'
 import { BiLogOut } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import MessageReceiver from '../../components/MessageSender'
+import MessageSender from '../../components/MessageSender'
+import MessageReceiver from '../../components/MessageReceiver'
 import { io } from "socket.io-client";
+import axios from 'axios'
+import swal from 'sweetalert2'
+import { useSelector } from 'react-redux'
 
 // const Desktop = ({ children }) => {
 //   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -34,30 +38,57 @@ const Default = ({ children }) => {
 
 const Home = () => {
   const bottomRef = useRef(null);
+  const { userProfile } = useSelector((state) => state.user);
   const [selectMessage, setSelectMessage] = useState(true);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [username, setUsername] = useState("");
+  const [activeUsers, setActiveUsers] = useState({});
 
   // Get message
   useEffect(() => {
     const resultSocket = io(process.env.REACT_APP_API_URL);
     setSocket(resultSocket);
+    console.log(resultSocket)
+
     resultSocket.on("messageBE", (data) => {
       console.log(data)
       setMessages((current) => [...current, data]);
     });
+
+    resultSocket.on("getActiveUsers", (data) => {
+      setActiveUsers({
+        ...activeUsers,
+        ...data
+      })
+    })
   }, [])
+
+  // send username to server
+  useEffect(() => {
+    if (socket) {
+      socket.emit('setActiveUsers', { username: userProfile.username })
+    }
+  }, [socket])
 
   // Scroll to bottom after sending message
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Send message handler
+  // Send all message
+  // const handleSendMessage = (e) => {
+  //   e.preventDefault();
+  //   socket.emit('messageAll', { message: inputMessage, user: "alif" })
+  //   setInputMessage("")
+  // }
+
+  // Send private message
   const handleSendMessage = (e) => {
     e.preventDefault();
-    socket.emit('messageAll', { message: inputMessage, user: "alif" })
+    console.log(activeUsers)
+    socket.emit('messagePrivate', { senderId: socket.id, id : activeUsers.breadsticks.id ,message: inputMessage, user: userProfile.username })
     setInputMessage("")
   }
 
@@ -83,7 +114,7 @@ const Home = () => {
                     <li><a className="dropdown-item" href="#"><BsTelephone /> Calls</a></li>
                     <li><a className="dropdown-item" href="#"><BsBookmark /> Saved messages</a></li>
                     <li><a className="dropdown-item" href="#"><BsPersonPlus /> Invite friends</a></li>
-                    <li><a className="dropdown-item" href="#"><BsQuestionCircle /> Chatter FAQ</a></li>
+                    <li><button className="dropdown-item" href="#" onClick={() => alert(socket.id)}><BsQuestionCircle /> Show socket id</button></li>
                     <li><Link to="/user/logout" className="dropdown-item" href="#"><BiLogOut /> Logout</Link></li>
                   </ul>
                 </div>
@@ -134,7 +165,7 @@ const Home = () => {
             {selectMessage ?
               <div className='d-flex flex-column vh-100'>
                 <div className="d-flex align-items-center p-3">
-                  <img className="align-self-center" src='/assets/img/Rectangle-3.png' />
+                  <img className="align-self-center rounded" src='/assets/img/default-user.png' style={{width:"50px"}} />
                   <div className="d-flex flex-column justify-content-around ms-2">
                     <div className="">Theresa Webb</div>
                     <div className="text-primary">Online</div>
@@ -145,7 +176,7 @@ const Home = () => {
                 <div className="bg-light d-flex flex-column justify-content-end flex-grow-1 p-3 overflow-auto">
                   <div className="h-100">
                     {messages.map((item) => (
-                      <MessageReceiver text={item.message} />
+                      <MessageReceiver text={item.message} time="12:23" />
                     ))}
                     <div ref={bottomRef} style={{
                       visibility: 'hidden'

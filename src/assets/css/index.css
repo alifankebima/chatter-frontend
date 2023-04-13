@@ -69,10 +69,3 @@ a {
     color: #ffffff;
     background-color: var(--primary-theme);
 }
-
-.left-bubble{
-    color: white;
-    background-color: var(--primary-theme);
-    border-radius: 18px 18px 18px 3px;
-    max-width: 500px;
-}

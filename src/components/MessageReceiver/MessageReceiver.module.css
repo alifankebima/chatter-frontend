@@ -1,0 +1,6 @@
+.rightBubble{
+    color: white;
+    background-color: var(--primary-theme);
+    border-radius: 18px 18px 3px 18px;
+    max-width: 500px;
+}

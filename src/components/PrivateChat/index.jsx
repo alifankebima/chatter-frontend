@@ -3,7 +3,7 @@ import React from 'react'
 const PrivateChat = () => {
   return (
     <div className="d-flex my-3">
-      <img className="align-self-center" src='/assets/img/Rectangle-3.png' />
+      <img className="align-self-center rounded" src='/assets/img/default-user.png' style={{width:"50px"}}/>
       <div className="d-flex justify-content-between w-100">
         <div className="mx-2 d-flex flex-column align-self-center">
           <div className="">Theresa Webb</div>
