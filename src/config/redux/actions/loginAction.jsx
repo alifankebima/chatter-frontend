@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert2';
 
 const loginAction = (data) => async (dispatch) => {
@@ -27,7 +26,7 @@ const loginAction = (data) => async (dispatch) => {
         console.log(error.response)
         swal.fire({
             title: `Login failed`,
-            text: `${error.response.data.message}`,
+            text: `${error.response ? error.response.data.message : "Failed logging in"}`,
             icon: `error`
         })
     }
