@@ -1,5 +1,5 @@
 const initialState = {
-    userProfile : {
+    userProfile: {
         id: "",
         fullname: "",
         username: "",
@@ -16,17 +16,13 @@ const initialState = {
 }
 
 const userReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case "USER_LOGIN":
         case "PROFILE":
-        case "REGISTER_SELLER" :
-        case "LOGIN_SELLER" :
-        case "REFRESH_TOKEN" :
-        case "UPDATE_SELLER" :
-        case "DELETE_TOKEN" :
-            return{
+        case "UPDATE_USER":
+            return {
                 ...state,
-                userProfile : action.payload
+                userProfile: action.payload
             }
         default:
             return state
