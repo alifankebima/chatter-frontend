@@ -1,7 +1,7 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
 
-const getProfileAction = () => async (dispatch) => {
+const getPrivateMessageListAction = () => async (dispatch) => {
     const API_URL = `${process.env.REACT_APP_API_URL}`;
     const token = localStorage.getItem("token");
     const auth = {
@@ -13,19 +13,19 @@ const getProfileAction = () => async (dispatch) => {
 
     // Axios API hit
     try {
-        const response = await axios.get(`${API_URL}/api/v1/user/profile`, auth);
+        const response = await axios.get(`${API_URL}/api/v1/private-message/list`, auth);
         if (response.status = 200) {
-            const result = response.data.data[0];
-            dispatch({ type: "PROFILE", payload: result})
+            const result = response.data.data;
+            dispatch({ type: "GET_PRIVATE_MESSAGE_LIST", payload: result})
         }
     } catch (error) {
         console.log(error.response)
         swal.fire({
-            title: `Get profile failed`,
+            title: `Get private message list failed`,
             text: `${error.response.data.message}`,
             icon: `error`
         })
     }
 }
 
-export default getProfileAction;
+export default getPrivateMessageListAction;

@@ -12,6 +12,17 @@ const initialState = {
         deleted_at: "",
         token: "",
         refreshToken: ""
+    },
+    detailUser: {
+        id: "",
+        fullname: "",
+        username: "",
+        email: "",
+        image: "",
+        phone_number: "",
+        created_at: "",
+        updated_at: "",
+        deleted_at: "",
     }
 }
 
@@ -23,6 +34,11 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userProfile: action.payload
+            }
+        case "GET_DETAIL_USER":
+            return {
+                ...state,
+                detailUser: action.payload
             }
         default:
             return state
