@@ -10,7 +10,7 @@ const MessageReceiver = (props) => {
                 : <img className={`align-self-end rounded ${styles.profilePicture}`} src='/assets/img/default-user.png' />
             }
             <div className='align-self-center'>
-                <div className={styles.rightBubble + " me-2 p-2"}>{props.text}</div>
+                <div className={styles.rightBubble + " me-2 p-2 text-break"}>{props.text}</div>
             </div>
             {props.time && <div className="me-2 mb-1 text-secondary align-self-end" style={{ fontSize: "14px" }}>{moment(props.time).format('hh:mm A')}</div>}
         </div>
