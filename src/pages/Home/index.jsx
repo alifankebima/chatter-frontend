@@ -10,7 +10,6 @@ import MessageSender from '../../components/MessageSender'
 import MessageReceiver from '../../components/MessageReceiver'
 import { io } from "socket.io-client";
 import { useDispatch, useSelector } from 'react-redux'
-import SearchMessage from '../../components/SearchMessage'
 import updateProfileAction from '../../config/redux/actions/updateProfileAction';
 import getProfileAction from '../../config/redux/actions/getprofileAction'
 import swal from 'sweetalert2';
@@ -19,6 +18,10 @@ import getPrivateMessageListAction from '../../config/redux/actions/getPrivateMe
 import { BiLogOut } from 'react-icons/bi'
 import styles from './Home.module.css'
 import axios from 'axios'
+import { HiOutlineLockClosed } from 'react-icons/hi'
+import { VscMegaphone } from 'react-icons/vsc'
+import { AiOutlinePlus, AiOutlineUsergroupAdd } from 'react-icons/ai'
+import moment from 'moment'
 
 // const Desktop = ({ children }) => {
 //   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -48,6 +51,7 @@ const Home = () => {
   const { privateMessageList } = useSelector((state) => state.privateMessage)
 
   // React states
+  // const [privateMessageList, setPrivateMessageList] = useState([])
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
   // const [lastMessage, setLastMessage] = useState([]);
@@ -57,6 +61,8 @@ const Home = () => {
   const [selectedChat, setSelectedChat] = useState({});
   // List of online users in socket.io
   const [activeUsers, setActiveUsers] = useState({});
+  // Track time and unread state
+  const [privateMessageList2, setPrivateMessageList2] = useState(privateMessageList);
 
   // Edit profile menu state
   const [showProfile, setShowProfile] = useState(false);
@@ -74,14 +80,6 @@ const Home = () => {
   useEffect(() => {
     const resultSocket = io(process.env.REACT_APP_API_URL);
     setSocket(resultSocket);
-
-    resultSocket.on("messageBE", (data) => {
-      if (selectedChat.username === data.sender_username || userProfile.username === data.sender_username) {
-        
-        setMessages((current) => [...current, data]);
-      }
-      // setLastMessage((current) => [...current, data[data.sender_username] = lastMessage]);
-    });
   }, [])
 
   const API_URL = `${process.env.REACT_APP_API_URL}`;
@@ -93,13 +91,13 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {    
+  useEffect(() => {
     axios.get(`${API_URL}/api/v1/private-message/${selectedChat.username}`, auth)
-    .then((result) => {
-      setMessages(result.data.data)
-    }).catch((error) => {
-      console.log(error)
-    })
+      .then((result) => {
+        setMessages(result.data.data)
+      }).catch((error) => {
+        console.log(error)
+      })
   }, [selectedChat])
 
   // Active users list for online / offline status
@@ -111,11 +109,25 @@ const Home = () => {
         fullname: userProfile.fullname,
         image: userProfile.image
       })
+
       socket.on("getActiveUsers", (data) => {
         setActiveUsers(data)
       })
+      
+      // socket.on("updatePrivateMessageList", (data)=> {
+      //   setPrivateMessageList(data)
+      //   console.log(data)
+      // })
+
+      socket.on("messageBE", (data) => {
+        //  Receiver                                            Sender
+        // if (selectedChat.username === data.receiver_username || userProfile.username === data.sender_username) {
+          setMessages((current) => [...current, data]);
+        // }
+      });
     }
   }, [socket])
+  
   // Remove user from active users list when disconnected
   const handleLogout = () => {
     socket.emit('removeActiveUsers', { username: userProfile.username })
@@ -130,19 +142,25 @@ const Home = () => {
 
   // Get users private message list
   useEffect(() => {
-    dispatch(getPrivateMessageListAction())
+    dispatch(getPrivateMessageListAction()).then(()=>{
+      setPrivateMessageList2(privateMessageList)
+    })
   }, [dispatch])
 
   // Send private message
   const handleSendMessage = (e) => {
     e.preventDefault();
-    socket.emit('messagePrivate', {
-      receiverUsername: selectedChat.username,
-      sender_username: userProfile.username,
-      senderImage: userProfile.image,
-      message: inputMessage
-    })
-    setInputMessage("")
+    if (inputMessage) {
+      socket.emit('messagePrivate', {
+        id_sender: userProfile.id,
+        id_receiver: selectedChat.id,
+        receiver_username: selectedChat.username,
+        sender_username: userProfile.username,
+        sender_image: userProfile.image,
+        message: inputMessage
+      })
+      setInputMessage("")
+    }
   }
 
   const handleDeleteImage = () => {
@@ -189,9 +207,30 @@ const Home = () => {
     }
   }
 
+
+
   return (
     <Fragment>
-      {/* <Default> */}
+      {/* modal */}
+      <div class="modal fade" id="newPrivateChat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Private Chat</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div className="mt-1" >Username</div>
+              <input type="text" className="form-control mb-3" name="username" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Add User</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container-fluid">
         <div className="row vh-100">
           <div className="col-md-4 col-lg-3">
@@ -213,8 +252,19 @@ const Home = () => {
                   </div>
                 </div>
 
-
-                <SearchMessage />
+                <div className="d-flex mt-4">
+                  <input type="text" className="form-control rounded border-0 bg-light" id="exampleFormControlInput1" placeholder="Search messages" />
+                  <div className="dropdown align-self-center">
+                    <button className="bg-transparent border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <AiOutlinePlus className="ms-2 fs-4 fw-bold text-primary-theme align-self-center" />
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end">
+                      <li><button className="btn dropdown-item"><AiOutlineUsergroupAdd className='fs-5' /> New group chat</button></li>
+                      <li><button type="button" className="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#newPrivateChat"><HiOutlineLockClosed className='fs-5' /> New private chat</button></li>
+                      <li><button className="btn dropdown-item"><VscMegaphone className='fs-5' /> Broadcast chat</button></li>
+                    </ul>
+                  </div>
+                </div>
 
                 {/* chat category selector */}
                 <ul className="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
@@ -232,12 +282,14 @@ const Home = () => {
                     <div className="h-100">
                       {privateMessageList.map((item) => {
                         if (item.sender !== userProfile.id) {
-                          return (<button key={item.sender_username} className='btn p-0 m-0 w-100' onClick={() => {setSelectedChat({ id: item.sender, username: item.sender_username, fullname: item.sender_fullname, image: item.sender_image });console.log(selectedChat)}}>
-                            <PrivateChat image={item.sender_image} fullname={item.sender_fullname} lastMessage="Placeholder" time="12:34" unreadCount="1" />
-                          </button>)}
+                          return (<button key={item.sender_username} className='btn p-0 m-0 w-100' onClick={() => { setSelectedChat({ id: item.sender, username: item.sender_username, fullname: item.sender_fullname, image: item.sender_image }); console.log(selectedChat) }}>
+                            <PrivateChat image={item.sender_image} fullname={item.sender_fullname} lastMessage={item.message} time={moment(item.created_at).format('hh:mm A')} unreadCount="1" />
+                          </button>)
+                        }
+                        //TODO
                         // } else {
                         //   return (<button key={item.receiver_username} className='btn p-0 m-0 w-100' onClick={() => setSelectedChat({ id: item.receiver, username: item.receiver_username, fullname: item.receiver_fullname, image: item.receiver_image })}>
-                        //     <PrivateChat image={item.receiver_image} fullname={item.receiver_fullname} lastMessage="Placeholder" time="12:34" unreadCount="1" />
+                        //     <PrivateChat image={item.receiver_image} fullname={item.receiver_fullname} lastMessage={item.message} time={moment(item.created_at).format('hh:mm A')} unreadCount="1" />
                         //   </button>)
                         // }
                       })}
