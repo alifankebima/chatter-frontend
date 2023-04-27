@@ -104,11 +104,11 @@ npm build
   </tr>
    <tr>
     <td><img width="350px" src="./docs/readme/home-page.png" border="0" alt="Home Page" /></td>
-    <td><img width="350px" src="" border="0" alt="" /> </td>
+    <td><img width="350px" src="./docs/readme/edit-profile.png" border="0" alt="Edit Profile" /> </td>
   </tr>
    <tr>
     <td>Home Page</td>
-    <td></td>
+    <td>Edit Profile</td>
   </tr>
 </table>
 
