@@ -108,7 +108,7 @@ npm build
   </tr>
    <tr>
     <td>Email Activation</td>
-    <td>Register</td>
+    <td>Forgot Password</td>
   </tr>
    <tr>
     <td><img width="350px" src="./docs/readme/home-page.png" border="0" alt="Home Page" /></td>
