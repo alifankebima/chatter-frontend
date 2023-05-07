@@ -246,6 +246,7 @@ const Home = () => {
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li><button className="dropdown-item" onClick={handleShowProfileButton}><BsGear /> Edit Profile</button></li>
+                      <li><button className="dropdown-item" data-bs-toggle="modal" data-bs-target="#newPrivateChat"><AiOutlineUsergroupAdd /> New Private Chat</button></li>
                       <li><button className="dropdown-item" onClick={() => alert(socket.id)}><BsQuestionCircle /> Show socket id</button></li>
                       <li><button className="dropdown-item" onClick={handleLogout}><BiLogOut /> Logout</button></li>
                     </ul>
@@ -285,11 +286,10 @@ const Home = () => {
                           return (<button key={item.sender_username} className='btn p-0 m-0 w-100' onClick={() => { setSelectedChat({ id: item.sender, username: item.sender_username, fullname: item.sender_fullname, image: item.sender_image }); console.log(selectedChat) }}>
                             <PrivateChat image={item.sender_image} fullname={item.sender_fullname} lastMessage={item.message} time={moment(item.created_at).format('hh:mm A')} unreadCount="1" />
                           </button>)
-                        }
-                        //TODO
-                        // } else {
-                        //   return (<button key={item.receiver_username} className='btn p-0 m-0 w-100' onClick={() => setSelectedChat({ id: item.receiver, username: item.receiver_username, fullname: item.receiver_fullname, image: item.receiver_image })}>
-                        //     <PrivateChat image={item.receiver_image} fullname={item.receiver_fullname} lastMessage={item.message} time={moment(item.created_at).format('hh:mm A')} unreadCount="1" />
+                        } 
+                        // else {
+                        //   return (<button key={item.sender_username} className='btn p-0 m-0 w-100' onClick={() => { setSelectedChat({ id: item.sender, username: item.sender_username, fullname: item.sender_fullname, image: item.sender_image }); console.log(selectedChat) }}>
+                        //     <PrivateChat image={item.sender_image} fullname={item.sender_fullname} lastMessage={item.message} time={moment(item.created_at).format('hh:mm A')} unreadCount=" " />
                         //   </button>)
                         // }
                       })}
